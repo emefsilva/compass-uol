@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccountController {
 
     private final AccountService accountService;
@@ -32,13 +33,13 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Account> findById(@RequestParam Long id) {
+    ResponseEntity<Account> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@RequestParam Long id) {
+    ResponseEntity<Void> delete(@PathVariable Long id) {
         var account = accountService.findById(id);
         accountService.delete(account);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
